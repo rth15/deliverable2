@@ -11,7 +11,7 @@ import UIKit
 class DetailViewController: UIViewController {
 
     @IBOutlet weak var detailDescriptionLabel: UILabel!
-
+    var DataModel: DroneModel!
 
     func configureView() {
         // Update the user interface for the detail item.
@@ -24,6 +24,12 @@ class DetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        DataModel = appDelegate.DroneModel
+        
+        DataModel.GetDrones() //Do Something load screen whatever
+        
         // Do any additional setup after loading the view, typically from a nib.
         configureView()
     }
