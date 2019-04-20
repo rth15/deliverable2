@@ -12,4 +12,10 @@ class Flight {
     var FlightId: Int
     var Destination: String
     var Origination: String
+    
+    init () {
+        FlightId = 0
+        Destination = ""
+        Origination = ""
+    }
 }

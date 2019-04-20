@@ -11,4 +11,9 @@ import Foundation
 class Repair {
     var RepairId: String
     var RepairCost: Int
+    
+    init () {
+        RepairId = ""
+        RepairCost = 0
+    }
 }

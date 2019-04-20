@@ -11,13 +11,16 @@ import UIKit
 class DetailViewController: UIViewController {
 
     @IBOutlet weak var detailDescriptionLabel: UILabel!
+    @IBOutlet weak var nameTextField: UITextField!
+    
+    
     var DataModel: DroneModel!
 
     func configureView() {
         // Update the user interface for the detail item.
         if let detail = detailItem {
             if let label = detailDescriptionLabel {
-                label.text = detail.timestamp!.description
+                label.text = detail.id.description +  " " + (detail.name?.description)!
             }
         }
     }
@@ -26,7 +29,7 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        DataModel = appDelegate.DroneModel
+        DataModel = appDelegate.droneModel
         
         DataModel.GetDrones() //Do Something load screen whatever
         
@@ -39,13 +42,21 @@ class DetailViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    var detailItem: Event? {
+    var detailItem: Drone? {
         didSet {
             // Update the view.
             configureView()
         }
     }
-
-
+    
+    @IBAction func UpdateName(_ sender: Any) {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let id = (detailItem?.id)!
+        let name = (nameTextField.text?.description)!
+        let _ = appDelegate.droneModel.UpdateDroneName(id: Int(id), name: name, appDelegate: appDelegate)
+    }
+    
+    
+    
 }
 
