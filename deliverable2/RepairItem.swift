@@ -8,7 +8,7 @@
 
 import Foundation
 
-class RepairItem {
+public class RepairItem {
     var RepairId: String?
     var RepairCost: Float?
 }

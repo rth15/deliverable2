@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 public class DroneItem {
     var name: String?
     var id: Int?

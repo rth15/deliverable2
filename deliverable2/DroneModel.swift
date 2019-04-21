@@ -18,9 +18,12 @@ class DroneModel: NSObject, NSFetchedResultsControllerDelegate {
     var managedObjectContext: NSManagedObjectContext? = nil
     var appDelegate: AppDelegate?
     var Drones = [DroneItem]()
+    var Events = [EventItem]()
+    var Repairs = [RepairItem]()
     
     let drequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Drone")
     let rrequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Repair")
+    let erequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Event")
     
     var _fetchedResultsController: NSFetchedResultsController<Drone>? = nil
     var fetchedResultsController: NSFetchedResultsController<Drone> {
