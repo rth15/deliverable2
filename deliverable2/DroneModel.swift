@@ -19,7 +19,9 @@ class DroneModel: NSObject, NSFetchedResultsControllerDelegate {
     var appDelegate: AppDelegate?
     var Drones = [DroneItem]()
     
-    let drequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Drones")
+    let drequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Drone")
+    let rrequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Repair")
+    
     var _fetchedResultsController: NSFetchedResultsController<Drone>? = nil
     var fetchedResultsController: NSFetchedResultsController<Drone> {
         if _fetchedResultsController != nil {
@@ -84,6 +86,10 @@ class DroneModel: NSObject, NSFetchedResultsControllerDelegate {
                                  name: data.value(forKey: "name") as! String)
             }
         } catch { }
+    }
+    
+    func CreateRepair(id: Int, repairId: Int, cost: Float) {
+        
     }
     
     func CreateDrone(id: Int, name: String) -> Void {

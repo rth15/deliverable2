@@ -60,7 +60,17 @@ class DetailViewController: UIViewController {
         let _ = appDelegate.droneModel.UpdateDroneName(id: Int(id), name: name, appDelegate: appDelegate)
     }
     
-    
-    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showRepairs" {
+            
+            
+                let controller = segue.destination as! RepairTableViewController
+
+                controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
+                controller.navigationItem.leftItemsSupplementBackButton = true
+                controller.segdroneId = self.detailItem?.id
+
+        }
+    }
 }
 
