@@ -102,7 +102,7 @@ class DroneModel: NSObject, NSFetchedResultsControllerDelegate {
         let entity = NSEntityDescription.entity(forEntityName: "Drone", in: context)
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Drone")
         request.entity = entity
-        let pred = NSPredicate(format: "id = %@", id)
+        let pred = NSPredicate(format: "id = %@", NSNumber(value: id))
         request.predicate = pred
         do {
             let result = try context.fetch(request)

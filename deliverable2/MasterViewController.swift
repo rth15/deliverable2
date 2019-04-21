@@ -111,7 +111,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     }
 
     func configureCell(_ cell: UITableViewCell, withEvent drone: Drone) {
-        cell.textLabel!.text = drone.id.description + " " + (drone.name?.description)!
+        cell.textLabel!.text = String(drone.id.description) + " " + (drone.name?.description)!
     }
 
     // MARK: - Fetched results controller

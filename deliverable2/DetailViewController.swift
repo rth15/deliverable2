@@ -20,7 +20,11 @@ class DetailViewController: UIViewController {
         // Update the user interface for the detail item.
         if let detail = detailItem {
             if let label = detailDescriptionLabel {
-                label.text = detail.id.description +  " " + (detail.name?.description)!
+                label.text = "Drone ID: " + detail.id.description
+            }
+            
+            if (nameTextField) != nil {
+                nameTextField.text = detail.name?.description
             }
         }
     }
@@ -31,7 +35,7 @@ class DetailViewController: UIViewController {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         DataModel = appDelegate.droneModel
         
-        DataModel.GetDrones() //Do Something load screen whatever
+        //DataModel.GetDrones() //Do Something load screen whatever
         
         // Do any additional setup after loading the view, typically from a nib.
         configureView()

@@ -33,9 +33,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Drone")
         request.returnsObjectsAsFaults = false
         self.droneModel.clear()
+        
+        //do {
+            //var result = try controller.managedObjectContext?.fetch(request)
+            //result?.removeAll()
+            //for data in result as! [NSManagedObject] {
+            //    controller.managedObjectContext!.delete(data)
+            //}
+            // controller.managedObjectContext!.save()
+        //} catch {}
+        
         //self.droneModel.RefreshObjects(appDelegate: self)
-        if self.droneModel.count() == 0 {
-            
+        //if self.droneModel.count() == 0 {
+            /*
             let entity = NSEntityDescription.entity(forEntityName: "Drone", in: controller.managedObjectContext!)
             
             let newPin = NSManagedObject(entity: entity!, insertInto: controller.managedObjectContext!)
@@ -54,7 +64,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
             } catch {
                 
             }
-        }
+ */
+            //test
+        //}
 
         
         return true
