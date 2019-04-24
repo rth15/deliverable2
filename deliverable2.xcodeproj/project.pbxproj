@@ -74,10 +74,6 @@
 		6DFBA38D2267948D0077EAA6 /* deliverable2 */ = {
 			isa = PBXGroup;
 			children = (
-				4831AC9F22710F090057160D /* DroneModel.swift */,
-				4831ACA122710FA00057160D /* DroneItem.swift */,
-				4831ACA222710FA00057160D /* EventItem.swift */,
-				4831ACA322710FA00057160D /* RepairItem.swift */,
 				6DFBA38E2267948D0077EAA6 /* AppDelegate.swift */,
 				6DFBA3932267948D0077EAA6 /* MasterViewController.swift */,
 				6DFBA3952267948D0077EAA6 /* DetailViewController.swift */,
@@ -86,6 +82,10 @@
 				4831AC87226D09610057160D /* FlightTableViewController.swift */,
 				4831AC89226D098C0057160D /* FlightDetailViewController.swift */,
 				6DFBA3972267948D0077EAA6 /* Main.storyboard */,
+				4831AC9F22710F090057160D /* DroneModel.swift */,
+				4831ACA122710FA00057160D /* DroneItem.swift */,
+				4831ACA222710FA00057160D /* EventItem.swift */,
+				4831ACA322710FA00057160D /* RepairItem.swift */,
 				6DFBA39A2267948D0077EAA6 /* Assets.xcassets */,
 				6DFBA39C2267948D0077EAA6 /* LaunchScreen.storyboard */,
 				6DFBA39F2267948D0077EAA6 /* Info.plist */,

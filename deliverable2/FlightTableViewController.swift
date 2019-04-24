@@ -16,20 +16,13 @@ class FlightTableViewController: UITableViewController, NSFetchedResultsControll
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        navigationItem.leftBarButtonItem = editButtonItem
-        
-        //let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        //DataModel = appDelegate.droneModel
-        
-        navigationItem.leftBarButtonItem = editButtonItem
-        
+
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(insertNewObject(_:)))
         navigationItem.rightBarButtonItem = addButton
-        if let split = splitViewController {
-            let controllers = split.viewControllers
-            flightDetailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? FlightDetailViewController
-        }
+//        if let split = splitViewController {
+//            let controllers = split.viewControllers
+//            flightDetailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? FlightDetailViewController
+//        }
     }
     
     func configureCell(_ cell: UITableViewCell, withEvent event: Event) {
