@@ -13,7 +13,6 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var detailDescriptionLabel: UILabel!
     @IBOutlet weak var nameTextField: UITextField!
     
-    
     var DataModel: DroneModel!
 
     func configureView() {

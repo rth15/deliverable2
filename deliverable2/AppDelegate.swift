@@ -13,11 +13,11 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
 
     var window: UIWindow?
-    
     var droneModel = DroneModel()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+         //Override point for customization after application launch.
+        
         let splitViewController = self.window!.rootViewController as! UISplitViewController
         let navigationController = splitViewController.viewControllers[splitViewController.viewControllers.count-1] as! UINavigationController
         navigationController.topViewController!.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem
@@ -25,13 +25,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 
         let masterNavigationController = splitViewController.viewControllers[0] as! UINavigationController
         let controller = masterNavigationController.topViewController as! MasterViewController
-        
+
         controller.managedObjectContext = self.persistentContainer.viewContext
         droneModel.managedObjectContext = controller.managedObjectContext
-        
+
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Drone")
         request.returnsObjectsAsFaults = false
-        self.droneModel.clear()
+        //self.droneModel.clear()
         
         //do {
             //var result = try controller.managedObjectContext?.fetch(request)

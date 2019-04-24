@@ -13,25 +13,84 @@ class FlightTableViewController: UITableViewController, NSFetchedResultsControll
 
     var flightDetailViewController: FlightDetailViewController? = nil
     var managedObjectContext: NSManagedObjectContext? = nil
-    var DataModel: DroneModel!
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         navigationItem.leftBarButtonItem = editButtonItem
         
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        DataModel = appDelegate.droneModel
+        //let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        //DataModel = appDelegate.droneModel
+        
+        navigationItem.leftBarButtonItem = editButtonItem
         
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(insertNewObject(_:)))
-        
         navigationItem.rightBarButtonItem = addButton
         if let split = splitViewController {
             let controllers = split.viewControllers
             flightDetailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? FlightDetailViewController
         }
     }
+    
+    func configureCell(_ cell: UITableViewCell, withEvent event: Event) {
+        cell.textLabel!.text = event.timestamp!.description
+    }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.endUpdates()
+    }
+    
+    @objc
+    func insertNewObject(_ sender: Any) {
+        
+        let context = self.fetchedResultsController.managedObjectContext
+        let newEvent = Event(context: context)
+        newEvent.timestamp = Date()
+        // If appropriate, configure the new managed object.
+        
+        // Save the context.
+        do {
+            try context.save()
+        } catch {
+            // Replace this implementation with code to handle the error appropriately.
+            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            let nserror = error as NSError
+            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        //clearsSelectionOnViewWillAppear = splitViewController!.isCollapsed
+        super.viewWillAppear(animated)
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+
+    // MARK: - Table view data source
+
+
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return fetchedResultsController.sections?.count ?? 0
+    }
+
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        let sectionInfo = fetchedResultsController.sections![section]
+        return sectionInfo.numberOfObjects
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "FlightCell", for: indexPath)
+        let event = fetchedResultsController.object(at: indexPath)
+        configureCell(cell, withEvent: event)
+        return cell
+    }
+    
+    
+    //MARK: Fetched results controller
     
     var fetchedResultsController: NSFetchedResultsController<Event> {
         if _fetchedResultsController != nil {
@@ -47,6 +106,12 @@ class FlightTableViewController: UITableViewController, NSFetchedResultsControll
         let sortDescriptor = NSSortDescriptor(key: "timestamp", ascending: false)
         
         fetchRequest.sortDescriptors = [sortDescriptor]
+        
+        if self.managedObjectContext == nil {
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            self.managedObjectContext = appDelegate.persistentContainer.viewContext
+            
+        }
         
         // Edit the section name key path and cache name if appropriate.
         // nil for section name key path means "no sections".
@@ -96,100 +161,19 @@ class FlightTableViewController: UITableViewController, NSFetchedResultsControll
         }
     }
     
-    func configureCell(_ cell: UITableViewCell, withEvent event: Event) {
-        cell.textLabel!.text = String(DateFormatter.localizedString(from: event.timestamp!, dateStyle: .medium, timeStyle: .medium))
-    }
+
+        override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+            if segue.identifier == "showFlightDetail" {
+                if let indexPath = tableView.indexPathForSelectedRow {
+                    let object = fetchedResultsController.object(at: indexPath)
+                    let controller = (segue.destination as! UINavigationController).topViewController as! FlightDetailViewController
+                    controller.detailItem = object
+                    controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
+                    controller.navigationItem.leftItemsSupplementBackButton = true
     
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        tableView.endUpdates()
-    }
-    
-    @objc
-    func insertNewObject(_ sender: Any) {
-        
-        let context = self.fetchedResultsController.managedObjectContext
-        let newEvent = Event(context: context)
-        newEvent.timestamp = Date()
-        // If appropriate, configure the new managed object.
-        //newEvent.timestamp = Date()
-        
-        // Save the context.
-        do {
-            try context.save()
-        } catch {
-            // Replace this implementation with code to handle the error appropriately.
-            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            let nserror = error as NSError
-            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+                }
+            }
         }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        clearsSelectionOnViewWillAppear = splitViewController!.isCollapsed
-        super.viewWillAppear(animated)
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-    // MARK: - Table view data source
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
-    }
-
-    /*
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
-        return cell
-    }
-    */
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
 
     /*
     // MARK: - Navigation

@@ -10,6 +10,7 @@ import UIKit
 
 class FlightDetailViewController: UIViewController {
 
+    @IBOutlet var flightDetailLabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -19,6 +20,21 @@ class FlightDetailViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    var detailItem: Event? {
+        didSet {
+            configureView()
+        }
+    }
+    
+    func configureView() {
+        // Update the user interface for the detail item.
+        if let detail = detailItem {
+            if let label = flightDetailLabel {
+                label.text = "Flight ID: " + (detail.eventID?.description)!
+            }
+        }
     }
     
 
