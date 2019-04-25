@@ -10,8 +10,16 @@ import UIKit
 
 class FlightDetailViewController: UIViewController {
 
+    
+    var detailItem: Event?
     @IBOutlet weak var flightDetailLabel: UILabel!
-    @IBOutlet var datePicker: UIDatePicker!
+    @IBOutlet weak var datePicker: UIDatePicker!
+    
+
+    @IBAction func btnConfirm(_ sender: Any) {
+        
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,19 +32,35 @@ class FlightDetailViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    var detailItem: Event? {
-        didSet {
-            //configureView()
-        }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        //firstNameField.text = contact.fName
     }
-
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        view.endEditing(true)
+        
+        //contact.fName = firstNameField.text ?? ""
+        
+    }
+    
     func configureView() {
         // Update the user interface for the detail item.
         
-        let detail = detailItem as! Event
-        self.flightDetailLabel.text! = "Flight ID: " + (detail.eventID?.description)!
-        datePicker.date = detail.timestamp!
+        let detail = detailItem
+        self.flightDetailLabel.text! = "Flight ID: " + (detail?.eventID?.description)!
+        datePicker.date = Date() //detail.timestamp!
         
     }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    
 }
 
