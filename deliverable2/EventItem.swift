@@ -12,4 +12,5 @@ public class EventItem {
     var eventID: String?
     var timestamp: Date?
     var duration: Int?
+    var location: String?
 }

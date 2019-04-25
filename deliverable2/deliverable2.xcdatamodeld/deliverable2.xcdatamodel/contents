@@ -9,6 +9,7 @@
     <entity name="Event" representedClassName="Event" codeGenerationType="class">
         <attribute name="duration" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="eventID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="location" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="timestamp" optional="YES" attributeType="Date">
             <userInfo/>
         </attribute>
@@ -23,7 +24,7 @@
     </entity>
     <elements>
         <element name="Drone" positionX="261" positionY="198" width="128" height="105"/>
-        <element name="Event" positionX="261" positionY="189" width="128" height="105"/>
+        <element name="Event" positionX="261" positionY="189" width="128" height="120"/>
         <element name="Repair" positionX="261" positionY="207" width="128" height="105"/>
     </elements>
 </model>

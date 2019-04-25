@@ -22,11 +22,6 @@ class RepairTableViewController: UITableViewController, NSFetchedResultsControll
         
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(insertNewObject(_:)))
         navigationItem.rightBarButtonItem = addButton
-        
-        //if let split = splitViewController {
-        //    let controllers = split.viewControllers
-        //    detailViewController = (controllers[controllers.count-1] as! //UINavigationController).topViewController as? DetailViewController
-        //}
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -61,17 +56,15 @@ class RepairTableViewController: UITableViewController, NSFetchedResultsControll
     // MARK: - Segues
     
 //    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        /*if segue.identifier == "showDetail" {
+//        if segue.identifier == "showDetail" {
 //            if let indexPath = tableView.indexPathForSelectedRow {
 //                let object = fetchedResultsController.object(at: indexPath)
-//                let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
+//                let controller = (segue.destination as! UINavigationController).topViewController as! RepairDetailViewController
 //                controller.detailItem = object
 //                controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
 //                controller.navigationItem.leftItemsSupplementBackButton = true
-//
-//
 //            }
-//        }*/
+//        }
 //    }
     
     // MARK: - Table View
@@ -79,7 +72,6 @@ class RepairTableViewController: UITableViewController, NSFetchedResultsControll
     override func numberOfSections(in tableView: UITableView) -> Int {
             return fetchedResultsController.sections?.count ?? 0
     }
-    
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let sectionInfo = fetchedResultsController.sections![section]
@@ -162,6 +154,7 @@ class RepairTableViewController: UITableViewController, NSFetchedResultsControll
         
         return _fetchedResultsController!
     }
+    
     var _fetchedResultsController: NSFetchedResultsController<Repair>? = nil
     
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
@@ -196,15 +189,6 @@ class RepairTableViewController: UITableViewController, NSFetchedResultsControll
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.endUpdates()
     }
-    
-    /*
-     // Implementing the above methods to update the table view in response to individual changes may have performance implications if a large number of changes are made simultaneously. If this proves to be an issue, you can instead just implement controllerDidChangeContent: which notifies the delegate that all section and object changes have been processed.
-     
-     func controllerDidChangeContent(controller: NSFetchedResultsController) {
-     // In the simplest, most efficient, case, reload the table view.
-     tableView.reloadData()
-     }
-     */
     
 }
 

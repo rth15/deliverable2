@@ -18,6 +18,7 @@ class DetailViewController: UIViewController {
     func configureView() {
         // Update the user interface for the detail item.
         if let detail = detailItem {
+            
             if let label = detailDescriptionLabel {
                 label.text = "Drone ID: " + detail.id.description
             }
@@ -59,17 +60,5 @@ class DetailViewController: UIViewController {
         let _ = appDelegate.droneModel.UpdateDroneName(id: Int(id), name: name, appDelegate: appDelegate)
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showRepairs" {
-            
-            
-                let controller = segue.destination as! RepairTableViewController
-
-                controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
-                controller.navigationItem.leftItemsSupplementBackButton = true
-                controller.segdroneId = self.detailItem?.id
-
-        }
-    }
 }
 

@@ -21,15 +21,23 @@ class RepairDetailViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+//    var detailItem: Repair? {
+//        didSet {
+//            // Update the view.
+//            configureView()
+//        }
+//    }
+    
+//    func configureView() {
+//        // Update the user interface for the detail item.
+//        if let detail = detailItem {
+//            if let label = detailDescriptionLabel {
+//                label.text = "Repair ID: " + detail.id.description
+//            }
+//
+//            if (nameTextField) != nil {
+//                nameTextField.text = detail.name?.description
+//            }
+//        }
+//    }
 }
