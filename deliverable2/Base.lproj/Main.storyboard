@@ -207,7 +207,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Rw-C2-R6j" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2978" y="-190"/>
+            <point key="canvasLocation" x="2951" y="-191"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="P3M-Qd-lFJ">
@@ -267,7 +267,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uZ2-CD-jji" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2978" y="636"/>
+            <point key="canvasLocation" x="2951" y="635"/>
         </scene>
         <!--Flight Detail View Controller-->
         <scene sceneID="Y4s-U3-5sJ">
