@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14135" systemVersion="17G65" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Drone" representedClassName=".Drone" syncable="YES" codeGenerationType="class">
+        <attribute name="dateacquired" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="flighthours" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="event" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Event" inverseName="drone" inverseEntity="Event" syncable="YES"/>
@@ -17,14 +19,16 @@
         <userInfo/>
     </entity>
     <entity name="Repair" representedClassName="Repair" syncable="YES" codeGenerationType="class">
+        <attribute name="category" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="cost" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="vendor" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="drone" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Drone" inverseName="repair" inverseEntity="Drone" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Drone" positionX="261" positionY="198" width="128" height="105"/>
+        <element name="Drone" positionX="261" positionY="198" width="128" height="135"/>
         <element name="Event" positionX="261" positionY="189" width="128" height="120"/>
-        <element name="Repair" positionX="261" positionY="207" width="128" height="105"/>
+        <element name="Repair" positionX="261" positionY="207" width="128" height="135"/>
     </elements>
 </model>

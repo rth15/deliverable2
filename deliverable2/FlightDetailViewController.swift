@@ -9,16 +9,17 @@
 import UIKit
 import CoreData
 
-class FlightDetailViewController: UIViewController, NSFetchedResultsControllerDelegate {
+class FlightDetailViewController: UIViewController, NSFetchedResultsControllerDelegate, UITextFieldDelegate {
 
     var managedObjectContext: NSManagedObjectContext? = nil
     var detailItem: Event?
     @IBOutlet weak var flightDetailLabel: UILabel!
     @IBOutlet weak var datePicker: UIDatePicker!
     @IBOutlet weak var flightIdLabel: UITextField!
-    @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var flightDurationLabel: UITextField!
     @IBOutlet weak var flightLocationLabel: UITextField!
+    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var timeLabel: UILabel!
     var interactionType: String?
 
     @IBAction func btnConfirm(_ sender: Any) {
@@ -35,6 +36,8 @@ class FlightDetailViewController: UIViewController, NSFetchedResultsControllerDe
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         _ = fetchedResultsController
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        view.addGestureRecognizer(tapGesture)
         if detailItem?.eventID != nil {
             interactionType = "edit"
             configureEditView()
@@ -62,15 +65,22 @@ class FlightDetailViewController: UIViewController, NSFetchedResultsControllerDe
     
     func configureEditView() {
         // Update the user interface for the detail item.
-        if !(detailItem == nil) {
+        
             let detail = detailItem
+            let dateFormatterDate = DateFormatter()
+            let dateFormatterTime = DateFormatter()
+            dateFormatterDate.dateStyle = .full
+            dateFormatterTime.timeStyle = .short
+            let dateString = dateFormatterDate.string(from: (detail?.timestamp!)!)
+            let timeString = dateFormatterTime.string(from: (detail?.timestamp!)!)
+        
             flightDetailLabel.text! = "Flight ID: "
             flightIdLabel.text = detail?.eventID?.description
             datePicker.date = (detail?.timestamp!)!
-            dateLabel.text = detail?.timestamp!.description
+            dateLabel.text = "Date: " + dateString
+            timeLabel.text = "Time: " + timeString
             flightDurationLabel.text! = (detail?.duration.description)!
             flightLocationLabel.text = detail?.location?.description
-        }
     }
     
     @objc
@@ -140,10 +150,16 @@ class FlightDetailViewController: UIViewController, NSFetchedResultsControllerDe
     var _fetchedResultsController: NSFetchedResultsController<Event>? = nil
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
+        for textField in self.view.subviews where textField is UITextField {
+            textField.resignFirstResponder()
+        }
         return true
     }
     
+    @objc
+    func hideKeyboard() {
+        view.endEditing(true)
+    }
     
 }
 
