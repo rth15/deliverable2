@@ -74,7 +74,7 @@ class RepairDetailViewController: UIViewController, UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    var detailItem: Repair {
+    var detailItem: Repair? {
         didSet {
             // Update the view.
             configureView()
