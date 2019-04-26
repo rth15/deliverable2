@@ -16,6 +16,7 @@ class FlightDetailViewController: UIViewController, NSFetchedResultsControllerDe
     @IBOutlet weak var flightDetailLabel: UILabel!
     @IBOutlet weak var datePicker: UIDatePicker!
     @IBOutlet weak var flightIdLabel: UITextField!
+    @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var flightDurationLabel: UITextField!
     @IBOutlet weak var flightLocationLabel: UITextField!
     var interactionType: String?
@@ -28,7 +29,6 @@ class FlightDetailViewController: UIViewController, NSFetchedResultsControllerDe
             updateObject()
             _ = navigationController?.popViewController(animated: true)
         }
-        
     }
     
     override func viewDidLoad() {
@@ -64,8 +64,12 @@ class FlightDetailViewController: UIViewController, NSFetchedResultsControllerDe
         // Update the user interface for the detail item.
         if !(detailItem == nil) {
             let detail = detailItem
-            self.flightDetailLabel.text! = "Flight ID: " + (detail?.eventID?.description)!
-            datePicker.date = Date() //detail.timestamp!
+            flightDetailLabel.text! = "Flight ID: "
+            flightIdLabel.text = detail?.eventID?.description
+            datePicker.date = (detail?.timestamp!)!
+            dateLabel.text = detail?.timestamp!.description
+            flightDurationLabel.text! = (detail?.duration.description)!
+            flightLocationLabel.text = detail?.location?.description
         }
     }
     
@@ -85,6 +89,7 @@ class FlightDetailViewController: UIViewController, NSFetchedResultsControllerDe
             try context.save()
         } catch {
             let nserror = error as NSError
+            
             print(nserror)
         }
     }
@@ -113,7 +118,6 @@ class FlightDetailViewController: UIViewController, NSFetchedResultsControllerDe
         if self.managedObjectContext == nil {
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
             self.managedObjectContext = appDelegate.persistentContainer.viewContext
-            
         }
         
         // Create FetchedResultsController

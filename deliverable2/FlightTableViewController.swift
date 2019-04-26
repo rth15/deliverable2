@@ -16,7 +16,7 @@ class FlightTableViewController: UITableViewController, NSFetchedResultsControll
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        tableView.reloadData()
     }
     
     func configureCell(_ cell: UITableViewCell, withEvent event: Event) {
