@@ -65,6 +65,13 @@ class DroneModel: NSObject, NSFetchedResultsControllerDelegate {
         //self.RefreshObjects()
     }
     
+    func GetRepairCount(context: NSManagedObjectContext) -> Int {
+        do {
+            let result = try context.fetch(rrequest)
+            return result.count
+        } catch { return 0 }
+        
+    }
     func clear() -> Void {
         Drones.removeAll()
     }

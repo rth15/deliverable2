@@ -19,14 +19,25 @@ class RepairTableViewController: UITableViewController, NSFetchedResultsControll
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        navigationItem.leftBarButtonItem = editButtonItem
         
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(insertNewObject(_:)))
         navigationItem.rightBarButtonItem = addButton
+        
+        //self.tableView.reloadData()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        clearsSelectionOnViewWillAppear = splitViewController!.isCollapsed
+        //clearsSelectionOnViewWillAppear = splitViewController!.isCollapsed
         super.viewWillAppear(animated)
+        //self.tableView.dataSource = nil
+        //self.tableView.reloadData()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        //self.tableView.dataSource = nil
+        //self.tableView.reloadData()
     }
     
     override func didReceiveMemoryWarning() {
@@ -36,11 +47,16 @@ class RepairTableViewController: UITableViewController, NSFetchedResultsControll
     
     @objc
     func insertNewObject(_ sender: Any) {
-        let context = self.fetchedResultsController.managedObjectContext
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
         let newRepair = Repair(context: context)
+        let newId = appDelegate.droneModel.GetRepairCount(context: context) + 1
         
         // If appropriate, configure the new managed object.
+        newRepair.repid = Int32(newId)
         newRepair.date = Date()
+        newRepair.id = self.segdroneId!
+        newRepair.cost = 0.00
         
         // Save the context.
         do {
@@ -55,22 +71,21 @@ class RepairTableViewController: UITableViewController, NSFetchedResultsControll
     
     // MARK: - Segues
     
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "showDetail" {
-//            if let indexPath = tableView.indexPathForSelectedRow {
-//                let object = fetchedResultsController.object(at: indexPath)
-//                let controller = (segue.destination as! UINavigationController).topViewController as! RepairDetailViewController
-//                controller.detailItem = object
-//                controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
-//                controller.navigationItem.leftItemsSupplementBackButton = true
-//            }
-//        }
-//    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showRepairDetail" {
+            if let indexPath = tableView.indexPathForSelectedRow {
+                let object = fetchedResultsController.object(at: indexPath)
+                let controller = segue.destination as! RepairDetailViewController
+                controller.detailItem = object
+                
+            }
+        }
+    }
     
     // MARK: - Table View
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-            return fetchedResultsController.sections?.count ?? 0
+        return fetchedResultsController.sections?.count ?? 0
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -79,7 +94,7 @@ class RepairTableViewController: UITableViewController, NSFetchedResultsControll
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "RepairCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "RepCell", for: indexPath)
         let event = fetchedResultsController.object(at: indexPath)
         configureCell(cell, withEvent: event)
         return cell
@@ -92,8 +107,8 @@ class RepairTableViewController: UITableViewController, NSFetchedResultsControll
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let context = self.fetchedResultsController.managedObjectContext
-            context.delete(self.fetchedResultsController.object(at: indexPath))
+            let context = fetchedResultsController.managedObjectContext
+            context.delete(fetchedResultsController.object(at: indexPath))
             
             do {
                 try context.save()
@@ -107,7 +122,8 @@ class RepairTableViewController: UITableViewController, NSFetchedResultsControll
     }
     
     func configureCell(_ cell: UITableViewCell, withEvent repair: Repair) {
-        cell.textLabel!.text = String(repair.id.description) + " " + repair.cost.description
+        let droneInfo = "Drone #: " + String(repair.id.description) + " - " + repair.cost.description
+        cell.textLabel!.text = droneInfo + " on " + (repair.date?.description)!
     }
     
     // MARK: - Fetched results controller
@@ -120,7 +136,7 @@ class RepairTableViewController: UITableViewController, NSFetchedResultsControll
         let fetchRequest: NSFetchRequest<Repair> = Repair.fetchRequest()
         
         if self.segdroneId != nil {
-            let pred = NSPredicate(format: "id = %@", NSNumber(value: self.segdroneId!))
+            let pred = NSPredicate(format: "%K == %@", "id", NSNumber(value: self.segdroneId!))
             fetchRequest.predicate = pred
         }
         // Set the batch size to a suitable number.
@@ -131,15 +147,15 @@ class RepairTableViewController: UITableViewController, NSFetchedResultsControll
         
         fetchRequest.sortDescriptors = [sortDescriptor]
         
-        if self.managedObjectContext == nil {
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            self.managedObjectContext = appDelegate.persistentContainer.viewContext
-            
-        }
+        //if self.managedObjectContext == nil {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        
+        //}
         
         // Edit the section name key path and cache name if appropriate.
         // nil for section name key path means "no sections".
-        let aFetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.managedObjectContext!, sectionNameKeyPath: nil, cacheName: "Master")
+        let aFetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: "Master")
         aFetchedResultsController.delegate = self
         _fetchedResultsController = aFetchedResultsController
         
@@ -154,7 +170,6 @@ class RepairTableViewController: UITableViewController, NSFetchedResultsControll
         
         return _fetchedResultsController!
     }
-    
     var _fetchedResultsController: NSFetchedResultsController<Repair>? = nil
     
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
@@ -189,6 +204,15 @@ class RepairTableViewController: UITableViewController, NSFetchedResultsControll
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.endUpdates()
     }
+    
+    
+    // Implementing the above methods to update the table view in response to individual changes may have performance implications if a large number of changes are made simultaneously. If this proves to be an issue, you can instead just implement controllerDidChangeContent: which notifies the delegate that all section and object changes have been processed.
+    /*
+     func controllerDidChangeContent(controller: NSFetchedResultsController<NSFetchRequestResult>) {
+     // In the simplest, most efficient, case, reload the table view.
+     tableView.reloadData()
+     }*/
+    
     
 }
 
