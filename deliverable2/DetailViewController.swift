@@ -82,6 +82,9 @@ class DetailViewController: UIViewController, NSFetchedResultsControllerDelegate
             print(nserror)
         }
         
+        _ = navigationController?.popViewController(animated: true)
+        
+        
 //        let appDelegate = UIApplication.shared.delegate as! AppDelegate
 //        let id = (detailItem?.id)!
 //        let name = (nameTextField.text?.description)!

@@ -24,13 +24,14 @@ class FlightDetailViewController: UIViewController, NSFetchedResultsControllerDe
 
     @IBAction func btnConfirm(_ sender: Any) {
         if interactionType == "add" {
-            insertNewObject()
-            _ = navigationController?.popViewController(animated: true)
+            commitChanges()
         } else {
-            updateObject()
-            _ = navigationController?.popViewController(animated: true)
+            commitChanges()
         }
+        _ = navigationController?.popViewController(animated: true)
     }
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,17 +82,23 @@ class FlightDetailViewController: UIViewController, NSFetchedResultsControllerDe
             flightLocationLabel.text = detail?.location?.description
     }
     
-    @objc
-    func insertNewObject() {
+    func commitChanges() {
         
-        let duration = Int64(flightDurationLabel.text!)
         let context = self.fetchedResultsController.managedObjectContext
-        let newEvent = Event(context: context)
-        newEvent.timestamp = datePicker.date
-        newEvent.eventID = flightIdLabel.text
-        newEvent.duration = duration!
-        newEvent.location = flightLocationLabel.text
-        
+        if detailItem != nil {
+            detailItem?.timestamp = datePicker.date
+            detailItem?.eventID = flightIdLabel.text
+            detailItem?.duration = Int64(flightDurationLabel.text!)!
+            detailItem?.location = flightLocationLabel.text
+            
+        } else {
+            let duration = Int64(flightDurationLabel.text!)
+            let newEvent = Event(context: context)
+            newEvent.timestamp = datePicker.date
+            newEvent.eventID = flightIdLabel.text
+            newEvent.duration = duration!
+            newEvent.location = flightLocationLabel.text
+        }
         // Save the context.
         do {
             try context.save()
@@ -100,10 +107,6 @@ class FlightDetailViewController: UIViewController, NSFetchedResultsControllerDe
             
             print(nserror)
         }
-    }
-    
-    func updateObject() {
-        
     }
     
     //MARK: Fetched results controller
@@ -129,7 +132,7 @@ class FlightDetailViewController: UIViewController, NSFetchedResultsControllerDe
             self.managedObjectContext = appDelegate.persistentContainer.viewContext
         }
         
-        fetchRequest.entity = NSEntityDescription.entity(forEntityName: "Drone", in: self.managedObjectContext!)
+        fetchRequest.entity = NSEntityDescription.entity(forEntityName: "Event", in: self.managedObjectContext!)
         
         // Create FetchedResultsController
         
