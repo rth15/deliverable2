@@ -10,10 +10,6 @@
 		4831AC88226D09610057160D /* FlightTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4831AC87226D09610057160D /* FlightTableViewController.swift */; };
 		4831AC8A226D098C0057160D /* FlightDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4831AC89226D098C0057160D /* FlightDetailViewController.swift */; };
 		4831AC90226D16260057160D /* RepairDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4831AC8F226D16260057160D /* RepairDetailViewController.swift */; };
-		4831ACA022710F0A0057160D /* DroneModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4831AC9F22710F090057160D /* DroneModel.swift */; };
-		4831ACA422710FA10057160D /* DroneItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4831ACA122710FA00057160D /* DroneItem.swift */; };
-		4831ACA522710FA10057160D /* EventItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4831ACA222710FA00057160D /* EventItem.swift */; };
-		4831ACA622710FA10057160D /* RepairItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4831ACA322710FA00057160D /* RepairItem.swift */; };
 		6D34A822226BF78B00444906 /* RepairTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D34A821226BF78B00444906 /* RepairTableViewController.swift */; };
 		6DFBA38F2267948D0077EAA6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFBA38E2267948D0077EAA6 /* AppDelegate.swift */; };
 		6DFBA3922267948D0077EAA6 /* deliverable2.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6DFBA3902267948D0077EAA6 /* deliverable2.xcdatamodeld */; };
@@ -28,10 +24,6 @@
 		4831AC87226D09610057160D /* FlightTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightTableViewController.swift; sourceTree = "<group>"; };
 		4831AC89226D098C0057160D /* FlightDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightDetailViewController.swift; sourceTree = "<group>"; };
 		4831AC8F226D16260057160D /* RepairDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepairDetailViewController.swift; sourceTree = "<group>"; };
-		4831AC9F22710F090057160D /* DroneModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DroneModel.swift; sourceTree = "<group>"; };
-		4831ACA122710FA00057160D /* DroneItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DroneItem.swift; sourceTree = "<group>"; };
-		4831ACA222710FA00057160D /* EventItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventItem.swift; sourceTree = "<group>"; };
-		4831ACA322710FA00057160D /* RepairItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepairItem.swift; sourceTree = "<group>"; };
 		6D34A821226BF78B00444906 /* RepairTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepairTableViewController.swift; sourceTree = "<group>"; };
 		6DFBA38B2267948D0077EAA6 /* deliverable2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = deliverable2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6DFBA38E2267948D0077EAA6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -82,10 +74,6 @@
 				4831AC87226D09610057160D /* FlightTableViewController.swift */,
 				4831AC89226D098C0057160D /* FlightDetailViewController.swift */,
 				6DFBA3972267948D0077EAA6 /* Main.storyboard */,
-				4831AC9F22710F090057160D /* DroneModel.swift */,
-				4831ACA122710FA00057160D /* DroneItem.swift */,
-				4831ACA222710FA00057160D /* EventItem.swift */,
-				4831ACA322710FA00057160D /* RepairItem.swift */,
 				6DFBA39A2267948D0077EAA6 /* Assets.xcassets */,
 				6DFBA39C2267948D0077EAA6 /* LaunchScreen.storyboard */,
 				6DFBA39F2267948D0077EAA6 /* Info.plist */,
@@ -172,12 +160,8 @@
 				6DFBA38F2267948D0077EAA6 /* AppDelegate.swift in Sources */,
 				6DFBA3942267948D0077EAA6 /* MasterViewController.swift in Sources */,
 				4831AC8A226D098C0057160D /* FlightDetailViewController.swift in Sources */,
-				4831ACA022710F0A0057160D /* DroneModel.swift in Sources */,
-				4831ACA422710FA10057160D /* DroneItem.swift in Sources */,
 				6D34A822226BF78B00444906 /* RepairTableViewController.swift in Sources */,
-				4831ACA622710FA10057160D /* RepairItem.swift in Sources */,
 				6DFBA3962267948D0077EAA6 /* DetailViewController.swift in Sources */,
-				4831ACA522710FA10057160D /* EventItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

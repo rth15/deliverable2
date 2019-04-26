@@ -13,11 +13,14 @@ class FlightTableViewController: UITableViewController, NSFetchedResultsControll
 
     var flightDetailViewController: FlightDetailViewController? = nil
     var managedObjectContext: NSManagedObjectContext? = nil
+    var detailItem: Drone?
+    var currentID: Int32?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(insertNewObject(_:)))
         navigationItem.rightBarButtonItem = addButton
+        currentID = detailItem!.id
         
     }
     
@@ -54,7 +57,11 @@ class FlightTableViewController: UITableViewController, NSFetchedResultsControll
                 let object = fetchedResultsController.object(at: indexPath)
                 let controller = segue.destination as! FlightDetailViewController
                 controller.detailItem = object
+                controller.droneItem = detailItem
             }
+        } else if segue.identifier == "addFlight" {
+                let controller = segue.destination as! FlightDetailViewController
+                controller.droneItem = detailItem
         }
     }
     
@@ -109,10 +116,10 @@ class FlightTableViewController: UITableViewController, NSFetchedResultsControll
         // Set the batch size to a suitable number.
         fetchRequest.fetchBatchSize = 20
         
+        
         // Edit the sort key as appropriate.
         
-//        let searchString =
-//        fetchRequest.predicate = NSPredicate(format: "eventID == %@", searchString)
+        fetchRequest.predicate = NSPredicate(format: "%K == %d", "droneID", currentID!)
         let sortDescriptor = NSSortDescriptor(key: "timestamp", ascending: false)
         
         fetchRequest.sortDescriptors = [sortDescriptor]

@@ -13,7 +13,6 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
 
     var window: UIWindow?
-    var droneModel = DroneModel()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
          //Override point for customization after application launch.
@@ -27,46 +26,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         let controller = masterNavigationController.topViewController as! MasterViewController
 
         controller.managedObjectContext = self.persistentContainer.viewContext
-        droneModel.managedObjectContext = controller.managedObjectContext
 
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Drone")
         request.returnsObjectsAsFaults = false
-        //self.droneModel.clear()
-        
-        //do {
-            //var result = try controller.managedObjectContext?.fetch(request)
-            //result?.removeAll()
-            //for data in result as! [NSManagedObject] {
-            //    controller.managedObjectContext!.delete(data)
-            //}
-            // controller.managedObjectContext!.save()
-        //} catch {}
-        
-        //self.droneModel.RefreshObjects(appDelegate: self)
-        //if self.droneModel.count() == 0 {
-            /*
-            let entity = NSEntityDescription.entity(forEntityName: "Drone", in: controller.managedObjectContext!)
-            
-            let newPin = NSManagedObject(entity: entity!, insertInto: controller.managedObjectContext!)
-            newPin.setValue(0, forKey: "id")
-            newPin.setValue("Drone Earth", forKey: "name")
-            let newPin2 = NSManagedObject(entity: entity!, insertInto: controller.managedObjectContext!)
-            newPin2.setValue(1, forKey: "id")
-            newPin2.setValue("Drone Mars", forKey: "name")
-            let newPin3 = NSManagedObject(entity: entity!, insertInto: controller.managedObjectContext!)
-            newPin3.setValue(2, forKey: "id")
-            newPin3.setValue("Drone Saturn", forKey: "name")
-            
-            
-            do {
-                try controller.managedObjectContext!.save()
-            } catch {
-                
-            }
- */
-            //test
-        //}
-
         
         return true
     }

@@ -5,10 +5,12 @@
         <attribute name="flighthours" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="photo" optional="YES" attributeType="Binary" syncable="YES"/>
         <relationship name="event" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Event" inverseName="drone" inverseEntity="Event" syncable="YES"/>
         <relationship name="repair" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Repair" inverseName="drone" inverseEntity="Repair" syncable="YES"/>
     </entity>
     <entity name="Event" representedClassName="Event" codeGenerationType="class">
+        <attribute name="droneID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="duration" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="eventID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="location" optional="YES" attributeType="String" syncable="YES"/>
@@ -22,13 +24,14 @@
         <attribute name="category" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="cost" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="droneID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="vendor" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="drone" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Drone" inverseName="repair" inverseEntity="Drone" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Drone" positionX="261" positionY="198" width="128" height="135"/>
-        <element name="Event" positionX="261" positionY="189" width="128" height="120"/>
-        <element name="Repair" positionX="261" positionY="207" width="128" height="135"/>
+        <element name="Drone" positionX="261" positionY="198" width="128" height="150"/>
+        <element name="Event" positionX="261" positionY="189" width="128" height="135"/>
+        <element name="Repair" positionX="261" positionY="207" width="128" height="150"/>
     </elements>
 </model>

@@ -11,8 +11,6 @@ import CoreData
 
 class FlightDetailViewController: UIViewController, NSFetchedResultsControllerDelegate, UITextFieldDelegate {
 
-    var managedObjectContext: NSManagedObjectContext? = nil
-    var detailItem: Event?
     @IBOutlet weak var flightDetailLabel: UILabel!
     @IBOutlet weak var datePicker: UIDatePicker!
     @IBOutlet weak var flightIdLabel: UITextField!
@@ -20,8 +18,23 @@ class FlightDetailViewController: UIViewController, NSFetchedResultsControllerDe
     @IBOutlet weak var flightLocationLabel: UITextField!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
+    var managedObjectContext: NSManagedObjectContext? = nil
     var interactionType: String?
+    var detailItem: Event?
+    var droneItem: Drone?
+    var droneID: Int32?
 
+    @IBAction func dateChanged(_ sender: Any) {
+        let dateFormatterDate = DateFormatter()
+        let dateFormatterTime = DateFormatter()
+        dateFormatterDate.dateStyle = .full
+        dateFormatterTime.timeStyle = .short
+        let dateString = dateFormatterDate.string(from: datePicker.date)
+        let timeString = dateFormatterTime.string(from: datePicker.date)
+        dateLabel.text = "Date: " + dateString
+        timeLabel.text = "Time: " + timeString
+    }
+    
     @IBAction func btnConfirm(_ sender: Any) {
         if interactionType == "add" {
             commitChanges()
@@ -31,20 +44,20 @@ class FlightDetailViewController: UIViewController, NSFetchedResultsControllerDe
         _ = navigationController?.popViewController(animated: true)
     }
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         _ = fetchedResultsController
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         view.addGestureRecognizer(tapGesture)
-        if detailItem?.eventID != nil {
+        droneID = droneItem?.id
+        if detailItem != nil {
             interactionType = "edit"
             configureEditView()
         } else {
             interactionType = "add"
         }
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -64,7 +77,6 @@ class FlightDetailViewController: UIViewController, NSFetchedResultsControllerDe
     
     func configureEditView() {
         // Update the user interface for the detail item.
-        
             let detail = detailItem
             let dateFormatterDate = DateFormatter()
             let dateFormatterTime = DateFormatter()
@@ -90,6 +102,7 @@ class FlightDetailViewController: UIViewController, NSFetchedResultsControllerDe
             detailItem?.eventID = flightIdLabel.text
             detailItem?.duration = Int64(flightDurationLabel.text!)!
             detailItem?.location = flightLocationLabel.text
+            detailItem?.droneID = droneID!
             
         } else {
             let duration = Int64(flightDurationLabel.text!)
@@ -98,6 +111,7 @@ class FlightDetailViewController: UIViewController, NSFetchedResultsControllerDe
             newEvent.eventID = flightIdLabel.text
             newEvent.duration = duration!
             newEvent.location = flightLocationLabel.text
+            newEvent.droneID = droneID!
         }
         // Save the context.
         do {

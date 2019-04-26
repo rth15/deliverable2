@@ -9,40 +9,20 @@
 import UIKit
 import CoreData
 
-class DetailViewController: UIViewController, NSFetchedResultsControllerDelegate {
+class DetailViewController: UIViewController, UINavigationControllerDelegate, NSFetchedResultsControllerDelegate, UIImagePickerControllerDelegate {
 
+    @IBOutlet weak var myPicture: UIImageView!
     @IBOutlet weak var detailDescriptionLabel: UILabel!
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var idText: UITextField!
     @IBOutlet weak var dateText: UITextField!
     @IBOutlet weak var flightHoursText: UITextField!
     var managedObjectContext: NSManagedObjectContext? = nil
-    
-    var DataModel: DroneModel!
-
-    func configureView() {
-        // Update the user interface for the detail item.
-        if let detail = detailItem {
-            
-            if let label = detailDescriptionLabel {
-                label.text = "Drone ID: " + detail.id.description
-            }
-            
-            if (nameTextField) != nil {
-                nameTextField.text = detail.name?.description
-            }
-        }
-    }
+    var interactionType: String?
+    var detailItem: Drone?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        DataModel = appDelegate.droneModel
-        
-        //DataModel.GetDrones() //Do Something load screen whatever
-        
-        // Do any additional setup after loading the view, typically from a nib.
         configureView()
     }
 
@@ -50,13 +30,7 @@ class DetailViewController: UIViewController, NSFetchedResultsControllerDelegate
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-    var detailItem: Drone? {
-        didSet {
-            // Update the view.
-            configureView()
-        }
-    }
+    
     
     @IBAction func UpdateName(_ sender: Any) {
         
@@ -65,6 +39,8 @@ class DetailViewController: UIViewController, NSFetchedResultsControllerDelegate
             detailItem?.flighthours = Int32(flightHoursText.text!)!
             detailItem?.id = Int32(idText.text!)!
             detailItem?.name = nameTextField.text!
+            let photo = UIImagePNGRepresentation(myPicture.image!)
+            detailItem?.photo = photo
         } else {
             let context = self.fetchedResultsController.managedObjectContext
             let newDrone = Drone(context: context)
@@ -72,6 +48,8 @@ class DetailViewController: UIViewController, NSFetchedResultsControllerDelegate
             newDrone.flighthours = Int32(flightHoursText.text!)!
             newDrone.id = Int32(idText.text!)!
             newDrone.name = nameTextField.text!
+            let photo = UIImagePNGRepresentation(myPicture.image!)
+            newDrone.photo = photo
         }
         // Save the context.
         do {
@@ -83,13 +61,67 @@ class DetailViewController: UIViewController, NSFetchedResultsControllerDelegate
         }
         
         _ = navigationController?.popViewController(animated: true)
-        
-        
-//        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-//        let id = (detailItem?.id)!
-//        let name = (nameTextField.text?.description)!
-//        let _ = appDelegate.droneModel.UpdateDroneName(id: Int(id), name: name, appDelegate: appDelegate)
+    
     }
+    
+    func configureView() {
+        // Update the user interface for the detail item
+        
+        if detailItem != nil {
+            interactionType = "edit"
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateStyle = .short
+            let dateString = dateFormatter.string(from: (detailItem?.dateacquired!)!)
+            
+            nameTextField.text = detailItem?.name?.description
+            idText.text = detailItem?.id.description
+            dateText.text = dateString
+            flightHoursText.text = detailItem?.flighthours.description
+            myPicture.image = UIImage(data: (detailItem?.photo!)!,scale:1.0)
+            
+        } else {
+            interactionType = "add"
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showFlights" {
+                let controller = segue.destination as! FlightTableViewController
+                controller.detailItem = detailItem
+                controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
+                controller.navigationItem.leftItemsSupplementBackButton = true
+        }
+    }
+    
+    @IBAction func pressedCamera(_ sender: AnyObject) {
+        
+        let imagePicker = UIImagePickerController()
+        
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            imagePicker.sourceType = .camera
+            imagePicker.allowsEditing = true
+            imagePicker.cameraCaptureMode = .photo  // or .Video
+            imagePicker.modalPresentationStyle = .fullScreen
+        }
+        else {
+            imagePicker.sourceType = .photoLibrary
+        }
+        
+        imagePicker.delegate = self
+        
+        present(imagePicker, animated: true, completion: nil)
+    } // end pressedCamera
+    
+    
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        let image = info[UIImagePickerControllerOriginalImage] as! UIImage
+        
+        myPicture.image = image
+        
+        dismiss(animated: true, completion: nil)
+        
+    } // end imagePickerController (_:didFinish)
     
     
     //MARK: Fetched results controller
