@@ -18,7 +18,20 @@ class FlightTableViewController: UITableViewController, NSFetchedResultsControll
         super.viewDidLoad()
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(insertNewObject(_:)))
         navigationItem.rightBarButtonItem = addButton
+        
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        //clearsSelectionOnViewWillAppear = splitViewController!.isCollapsed
+        super.viewWillAppear(animated)
+        
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
     
     func configureCell(_ cell: UITableViewCell, withEvent event: Event) {
         cell.textLabel!.text = event.eventID!.description
@@ -31,17 +44,6 @@ class FlightTableViewController: UITableViewController, NSFetchedResultsControll
     @objc
     func insertNewObject(_ sender: Any) {
        performSegue(withIdentifier: "addFlight", sender: nil)
-    }
-    
-    
-    override func viewWillAppear(_ animated: Bool) {
-        //clearsSelectionOnViewWillAppear = splitViewController!.isCollapsed
-        super.viewWillAppear(animated)
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     // MARK: - Segues
@@ -57,7 +59,6 @@ class FlightTableViewController: UITableViewController, NSFetchedResultsControll
     }
     
     // MARK: - Table view data source
-
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         return fetchedResultsController.sections?.count ?? 0
@@ -96,7 +97,6 @@ class FlightTableViewController: UITableViewController, NSFetchedResultsControll
         }
     }
     
-    
     //MARK: Fetched results controller
     
     var fetchedResultsController: NSFetchedResultsController<Event> {
@@ -110,6 +110,9 @@ class FlightTableViewController: UITableViewController, NSFetchedResultsControll
         fetchRequest.fetchBatchSize = 20
         
         // Edit the sort key as appropriate.
+        
+//        let searchString =
+//        fetchRequest.predicate = NSPredicate(format: "eventID == %@", searchString)
         let sortDescriptor = NSSortDescriptor(key: "timestamp", ascending: false)
         
         fetchRequest.sortDescriptors = [sortDescriptor]
@@ -122,7 +125,7 @@ class FlightTableViewController: UITableViewController, NSFetchedResultsControll
         
         // Create FetchedResultsController
         
-        let aFetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.managedObjectContext!, sectionNameKeyPath: nil, cacheName: "Master")
+        let aFetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.managedObjectContext!, sectionNameKeyPath: nil, cacheName: nil)
         aFetchedResultsController.delegate = self
         _fetchedResultsController = aFetchedResultsController
         

@@ -53,8 +53,6 @@ class FlightDetailViewController: UIViewController, NSFetchedResultsControllerDe
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        //firstNameField.text = contact.fName
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -125,14 +123,17 @@ class FlightDetailViewController: UIViewController, NSFetchedResultsControllerDe
         
         fetchRequest.sortDescriptors = [sortDescriptor]
         
+        
         if self.managedObjectContext == nil {
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
             self.managedObjectContext = appDelegate.persistentContainer.viewContext
         }
         
+        fetchRequest.entity = NSEntityDescription.entity(forEntityName: "Drone", in: self.managedObjectContext!)
+        
         // Create FetchedResultsController
         
-        let aFetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.managedObjectContext!, sectionNameKeyPath: nil, cacheName: "Master")
+        let aFetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.managedObjectContext!, sectionNameKeyPath: nil, cacheName: nil)
         aFetchedResultsController.delegate = self
         _fetchedResultsController = aFetchedResultsController
         
@@ -156,6 +157,7 @@ class FlightDetailViewController: UIViewController, NSFetchedResultsControllerDe
         return true
     }
     
+    // dismiss keyboard
     @objc
     func hideKeyboard() {
         view.endEditing(true)
