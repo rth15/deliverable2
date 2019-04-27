@@ -1,11 +1,16 @@
-//
-//  FlightTableViewController.swift
-//  deliverable2
-//
-//  Created by Matt Kerbel on 4/21/19.
-//  Copyright © 2019 Roger Herzfeldt. All rights reserved.
-//
+//  PROGRAMMER: Matthew Kerbel/Roger Herzfeldt
 
+//  PANTHERID:     1763392
+
+//  CLASS:          COP 465501
+
+//  INSTRUCTOR:     Steve Luis  Online
+
+//  ASSIGNMENT:     Deliverable 2
+
+//  DUE:            4/26/19
+
+//
 import UIKit
 import CoreData
 
@@ -21,7 +26,6 @@ class FlightTableViewController: UITableViewController, NSFetchedResultsControll
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(insertNewObject(_:)))
         navigationItem.rightBarButtonItem = addButton
         currentID = detailItem!.id
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -37,7 +41,14 @@ class FlightTableViewController: UITableViewController, NSFetchedResultsControll
     
     
     func configureCell(_ cell: UITableViewCell, withEvent event: Event) {
-        cell.textLabel!.text = event.eventID!.description
+        let dateFormatterDate = DateFormatter()
+        let dateFormatterTime = DateFormatter()
+        let eventID = event.eventID?.description
+        let eventLocation = event.location?.description
+        dateFormatterDate.dateStyle = .short
+        dateFormatterTime.timeStyle = .short
+        let dateString = dateFormatterDate.string(from: (event.timestamp!))
+        cell.textLabel!.text = eventID! + " - " + eventLocation! + " - " + dateString
     }
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {

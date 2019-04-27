@@ -1,9 +1,15 @@
-//
-//  RepairDetailViewController.swift
-//  deliverable2
-//
-//  Created by Matt Kerbel on 4/21/19.
-//  Copyright © 2019 Roger Herzfeldt. All rights reserved.
+//  PROGRAMMER: Matthew Kerbel/Roger Herzfeldt
+
+//  PANTHERID:     1763392
+
+//  CLASS:          COP 465501
+
+//  INSTRUCTOR:     Steve Luis  Online
+
+//  ASSIGNMENT:     Deliverable 2
+
+//  DUE:            4/26/19
+
 //
 
 import UIKit

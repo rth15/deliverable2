@@ -1,9 +1,15 @@
-//
-//  AppDelegate.swift
-//  deliverable2
-//
-//  Created by user149900 on 4/17/19.
-//  Copyright © 2019 Roger Herzfeldt. All rights reserved.
+//  PROGRAMMER: Matthew Kerbel/Roger Herzfeldt
+
+//  PANTHERID:     1763392
+
+//  CLASS:          COP 465501
+
+//  INSTRUCTOR:     Steve Luis  Online
+
+//  ASSIGNMENT:     Deliverable 2
+
+//  DUE:            4/26/19
+
 //
 
 import UIKit
